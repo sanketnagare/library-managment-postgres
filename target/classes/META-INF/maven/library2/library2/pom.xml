@@ -1,0 +1,21 @@
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<modelVersion>4.0.0</modelVersion>
+  <groupId>library2</groupId>
+  <artifactId>library2</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  
+<dependencies>
+    <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.2.23.jre7</version>
+</dependency>
+  </dependencies>
+</project>
+
+
+
+
