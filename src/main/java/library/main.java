@@ -37,8 +37,11 @@ public class main {
 		        switch (option) {
 				case 1:{
 					System.out.println("Enter your user ID");
-	        		userID = scanner.nextInt();
-	        		scanner.nextLine();
+					userID = scanner.nextInt();
+					scanner.nextLine();					
+					if(!Member.checkMember(connection, userID)) {
+						continue;
+					}
 	        		break;
 				}
 				case 2:{
@@ -106,8 +109,8 @@ public class main {
                          }
                          case 4:{
                         	 System.out.println("Enter the ID of the magazine you want to delete.");
-//                             int magazineIDToDelete = scanner.nextInt();
-//                             Magazine.deleteMagazine(connection, magazineIDToDelete);
+                             int magazineIDToDelete = scanner.nextInt();
+                             Magazine.deleteMagazine(connection, magazineIDToDelete);
                              break;
                          }
                          case 5:{

@@ -44,10 +44,42 @@ public class Magazine {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error while adding the Magazine.");
-		}
-		
-		
+		}	
 	}
+    
+    
+	public static void deleteMagazine(Connection connection, int magazineID) {
+	    //check if the magazine is issued before deleting
+	    String issuedCheckQuery = "SELECT * FROM issue_items_magazines WHERE magazine_id = ?";
+	    try (PreparedStatement issuedCheckStatement = connection.prepareStatement(issuedCheckQuery)) {
+	        issuedCheckStatement.setInt(1, magazineID);
+	        ResultSet issuedCheckResult = issuedCheckStatement.executeQuery();
+
+	        if (issuedCheckResult.next()) {
+	            System.out.println("Cannot delete the Magazine. It is currently issued.");
+	        } else {
+	            // Delete the magazine if not issued
+	            String deleteQuery = "DELETE FROM magazines WHERE magazine_id = ?";
+	            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+	                deleteStatement.setInt(1, magazineID);
+	                int affectedRows = deleteStatement.executeUpdate();
+
+	                if (affectedRows > 0) {
+	                    System.out.println("Magazine deleted from the library.");
+	                } else {
+	                    System.out.println("Failed to delete the magazine. magazine ID not exist.");
+	                }
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Error while deleting the magazine.");
+	        e.printStackTrace();
+	    }
+	}
+    
+    
+    
 
     public static void showAvailableMagazines(Connection connection) {
         String query = "SELECT * FROM magazines WHERE availability = true order by magazine_id ";

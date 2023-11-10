@@ -6,19 +6,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Member {
-//	 private int member_id;
-//	    private String name;
-//	    private String type;
-//	    private int total_issued;
 
-//	    public Member(String name, String type) {
-//	        this.name = name;
-//	        this.type = type;
-//	    }
-
+public static boolean checkMember(Connection connection, int userID) {
+	
+	String checkString = "select member_id from members m where member_id = ?";
+	try (PreparedStatement checkStatement = connection.prepareStatement(checkString)){
+		
+		checkStatement.setInt(1, userID);
+		
+		ResultSet checkSet = checkStatement.executeQuery();
+		
+		if (checkSet.next()) {
+            return true;  // User found in the table
+        } else {
+            System.out.println("User not found, Enter valid ID again");
+            return false; // User not found
+        }
+	} catch (SQLException e) {
+		e.printStackTrace();
+		System.out.println("Failed to check member in database..");
+		return false;
+	}
+}
+	
 
 public static int addMemeber(Connection connection, String name, String group) {
-		
+
 		String insertSql = "Insert into members (name, type) values (?, ?) returning member_id";
 		
 		try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)){
